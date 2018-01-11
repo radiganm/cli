@@ -22,19 +22,21 @@
 
     cli.set_options()
       ("file,f", po::value<string>(), "input data file")
-      ("verbose,v", "verbose print to stdout")
+      ("verbose,v", po::value<bool>()->default_value(false)->implicit_value(false), "verbose printing to stdout")
       ;
 
     cli.parse(argc, argv);
 
     cout << env << endl;
 
-    cerr << "verbose: " << std::boolalpha << cli.exists("verbose") << endl;
+    cout << cli << endl;
+
+    cerr << "verbose => " << std::boolalpha << cli.exists("verbose") << endl;
 
     if (cli.count("file"))
     {
       const auto filename = cli["file"].as<string>();
-      cerr << "file: " << filename << endl;
+      cerr << "file => " << filename << endl;
     }
 
     cout << flush;

@@ -116,6 +116,24 @@ namespace rad::cli {
   std::ostream& operator<<(std::ostream &os, const rad::cli::Cli &o)
   {
     std::ios::fmtflags flags(os.flags());
+    for (const auto& it : o.get_options()) 
+    {
+      os << it.first.c_str() << ": ";
+      auto &value = it.second.value();
+      if (auto v = boost::any_cast<uint32_t>(&value))
+      {
+        os << *v;
+      }
+      else if (auto v = boost::any_cast<bool>(&value))
+      {
+        os << std::boolalpha << *v;
+      }
+      else if (auto v = boost::any_cast<std::string>(&value))
+      {
+        os << *v;
+      }
+      os << std::endl;
+    }
     os.flags(flags);
     return os;
   }

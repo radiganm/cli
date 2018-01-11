@@ -36,7 +36,7 @@ namespace rad::cli {
       
       void parse(int argc, char* argv[]);
       po::options_description_easy_init set_options();
-      po::variables_map get_options() { return vm_; }
+      const po::variables_map get_options() const { return vm_; }
       
       void interrupt(int signo);
       void set_interrupt(cli_interrupt_fn_t &fn);
@@ -55,7 +55,7 @@ namespace rad::cli {
       po::variables_map vm_;
       cli_interrupt_fn_t signal_fn_;
       
-      friend std::ostream& operator<<(std::ostream &os, Cli &o);
+      friend std::ostream& operator<<(std::ostream &os, const Cli &o);
       
   };
 
