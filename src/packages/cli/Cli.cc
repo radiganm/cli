@@ -10,8 +10,9 @@
   #include <sstream>
   #include <cstdlib>
   #include <stdexcept>
+
 #ifdef CLI__ENABLE_STACKTRACE
-  //#include <boost/stacktrace.hpp>
+  #include <boost/stacktrace.hpp>
 #endif
 
 namespace rad::cli {
@@ -50,6 +51,28 @@ namespace rad::cli {
       return true;
     };
     set_interrupt(interrupt_fn);
+  }
+
+  po::options_description_easy_init Cli::operator()()
+  { 
+    return set_options(); 
+  }
+
+  int Cli::count(std::string name)
+  {
+    return vm_.count(name.c_str());
+  }
+
+  bool Cli::exists(std::string name)
+  {
+    return 0 != vm_.count(name.c_str());
+  }
+
+  const po::variable_value& Cli::operator[](std::string name) const
+  {
+    if (not vm_.count(name.c_str())) 
+      throw std::runtime_error("invalid option access");
+    return vm_[name.c_str()];
   }
 
   Cli::~Cli()

@@ -12,7 +12,7 @@
 
 #pragma once
 
-  #undef CLI__ENABLE_STACKTRACE
+  #define CLI__ENABLE_STACKTRACE
 
 namespace rad::cli {
 
@@ -40,6 +40,11 @@ namespace rad::cli {
       
       void interrupt(int signo);
       void set_interrupt(cli_interrupt_fn_t &fn);
+
+      po::options_description_easy_init operator()();
+      int count(std::string name);
+      bool exists(std::string name);
+      const po::variable_value& operator[](std::string name) const;
       
     private:
       

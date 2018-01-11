@@ -26,12 +26,14 @@ test_cli_LDADD        = $(cli_ldadd)
 
 lib_LTLIBRARIES       = libcli.la                                               
 
-libcli_la_SOURCES     = src/packages/cli/Cli.cc
+libcli_la_SOURCES     = src/packages/cli/Cli.cc                                \
+                        src/packages/environment/Environment.cc
 libcli_la_LIBADD      = -L/usr/lib/x86_64-linux-gnu -lrt
 libcli_la_LDFLAGS     = -export-symbols-regex '^cli_[^_]' -fPIC                \
                         -shared -pthread                                       \
                         -L/usr/lib/x86_64-linux-gnu -lrt                        
 
-pkginclude_HEADERS    = include/packages/cli/Cli.h
+pkginclude_HEADERS    = include/packages/cli/Cli.h                             \
+                        include/packages/environment/Environment.h
 
 ### *EOF*

@@ -3,6 +3,7 @@
 /// All Rights Reserved
 
   #include "packages/cli/Cli.h"
+  #include "packages/environment/Environment.h"
   #include <iostream>
 
   using namespace rad::cli;
@@ -11,6 +12,7 @@
   int main(int argc, char *argv[])
   {
     Cli cli;
+    Environment env;
 
     Cli::cli_interrupt_fn_t interrupt_fn = [&](Interrupt_Signal &sig) -> bool {
       cerr << "interrupt" << endl;
@@ -20,18 +22,18 @@
 
     cli.set_options()
       ("file,f", po::value<string>(), "input data file")
-      ("help,h", "print this help message")
+      ("verbose,v", "verbose print to stdout")
       ;
 
     cli.parse(argc, argv);
 
-    auto vm = cli.get_options();
+    cout << env << endl;
 
-    cerr << "verbose: " << vm.count("verbose") << endl;
+    cerr << "verbose: " << std::boolalpha << cli.exists("verbose") << endl;
 
-    if (vm.count("file"))
+    if (cli.count("file"))
     {
-      const auto filename = vm["file"].as<string>();
+      const auto filename = cli["file"].as<string>();
       cerr << "file: " << filename << endl;
     }
 
