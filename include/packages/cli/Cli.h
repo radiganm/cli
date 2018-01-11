@@ -7,7 +7,6 @@
   #include <functional>
   #include <boost/property_tree/ptree.hpp>
   #include <boost/property_tree/xml_parser.hpp>
-  #include <boost/program_options.hpp>
   #include <boost/foreach.hpp>
   #include <boost/program_options.hpp>
 
@@ -36,7 +35,7 @@ namespace rad::cli {
       virtual ~Cli();
       
       void parse(int argc, char* argv[]);
-      po::options_description_easy_init options() { return desc_.add_options();}
+      po::options_description_easy_init set_options();
       po::variables_map get_options() { return vm_; }
       
       void interrupt(int signo);

@@ -11,7 +11,7 @@
   #include <cstdlib>
   #include <stdexcept>
 #ifdef CLI__ENABLE_STACKTRACE
-  #include <boost/stacktrace.hpp>
+  //#include <boost/stacktrace.hpp>
 #endif
 
 namespace rad::cli {
@@ -56,15 +56,20 @@ namespace rad::cli {
   {
   }
 
+  po::options_description_easy_init Cli::set_options() 
+  { 
+    return desc_.add_options()
+      ("help,h", "print this help message")
+    ;
+  }
+
   void Cli::parse(int argc, char* argv[])
   {
     argc_ = argc;
     argv_ = argv;
+    po::store(po::parse_command_line(argc, argv, desc_), vm_);
     po::notify(vm_);
-    desc_.add_options()
-      ("help,h", "print this help message")
-    ;
-    po::store(po::parse_command_line(argc_, argv_, desc_), vm_);
+    if(argc_ < 2)
     { 
       cout << desc_ << endl;
       exit(EXIT_FAILURE);
