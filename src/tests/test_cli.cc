@@ -16,7 +16,17 @@
 
     Cli::cli_interrupt_fn_t interrupt_fn = [&](Interrupt_Signal &sig) -> bool {
       cerr << "interrupt" << endl;
-      return true;
+      switch (sig)
+      {
+        case Interrupt_Signal::Sigint:
+          return false;
+        case Interrupt_Signal::Sigtstp:
+          return false;
+        case Interrupt_Signal::Sigusr1:
+          return false;
+        default:
+          return true;
+      }
     };
     cli.set_interrupt(interrupt_fn);
 
